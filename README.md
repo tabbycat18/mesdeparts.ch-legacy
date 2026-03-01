@@ -13,7 +13,7 @@ Legacy note:
 - Stop search with suggestions and favorites (stored locally; no account).
 - Two bus views: by line (balanced by destination) or chronological; trains are always chronological.
 - Filters for platform/line/train service plus “My favorites” mode.
-- Board mode toggle (“Tableau”) for always-on displays; direct mode for one-off checks.
+- Direct mode (public API) for one-off checks and lightweight usage.
 - Self-hosted SBB clock + digital clock; auto-refresh every 10–20 s (~3 h horizon).
 - Multilingual (FR/DE/IT/EN), deep links via `?stationName=...&stationId=...`, installable PWA shell (API stays online).
 
@@ -23,7 +23,7 @@ Legacy note:
 - `web-ui/manifest.webmanifest` + `web-ui/service-worker.js`: PWA shell; caches static assets, leaves API requests online-only.
 
 ## Architecture (versioned files)
-- `main.v*.js`: boot; reads URL/localStorage defaults (`stationName`/`stationId`, language), wires event handlers, starts refresh + countdown loops, and toggles board/direct API mode (auto-switches back to board mode after ~2 min unless overridden).
+- `main.v*.js`: boot; reads URL/localStorage defaults (`stationName`/`stationId`, language), wires event handlers, and starts refresh + countdown loops.
 - `state.v*.js`: shared config/constants (refresh cadence, horizons, view modes, thresholds) and mutable `appState`.
 - `logic.v*.js`: transport.opendata.ch client (or Cloudflare proxy when board mode is on), station resolve/nearby search, journey details fallback, delay/remark computation, grouping/sorting, and network detection for line colors.
 - `ui.v*.js`: DOM rendering of the board, clocks, station search with suggestions/nearby, filters (line/platform/train service), favorites popovers, view toggle, auto-fit watcher, and embed state publication.
@@ -46,6 +46,15 @@ Legacy note:
 - Rate limit note: `transport.opendata.ch` inherits the upstream `search.ch` per-IP quotas.
   Using direct mode means **each user’s IP** gets its own daily quota. Using a shared proxy
   collapses all users onto **one IP** and makes the quota easier to hit.
+
+## Why direct-only (legacy)
+The legacy UI now defaults to **direct mode only** for clarity and fairness:
+- Direct mode uses each user’s IP quota instead of a shared proxy IP.
+- A shared proxy collapses all users onto one quota and is easier to exhaust.
+- This repo is legacy/archival; avoiding a shared proxy reduces operational risk.
+
+If you still want a legacy proxy, set `window.__MD_API_BASE__` to your own worker URL and
+re-enable the board mode UI (see “Behavior/UX notes”).
 
 ## Data & refresh flow
 - Default station is `Lausanne, motte` (id `8592082`); query params or stored values override it. Deep links use `?stationName=...&stationId=...`.
@@ -79,7 +88,7 @@ Legacy note:
 - Board mode uses the proxy; direct mode calls the public API and auto-reverts to board mode after ~2 minutes unless the user keeps it on.
 
 ## Behavior/UX notes
-- Board mode toggle (“Tableau”) reduces API load by using the Worker cache; direct mode is faster for one-off checks. Filters/view changes are client-side only.
+- Filters/view changes are client-side only.
 - Legacy UI currently **hides the board mode toggle** in the HTML (commented out). The logic
   remains in JS; re-enable by uncommenting the `board-mode-toggle*` elements in
   `web-ui/index.html` and `web-ui/dual-board.html`.

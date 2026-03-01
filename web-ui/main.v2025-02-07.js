@@ -58,7 +58,7 @@ import { initI18n, applyStaticTranslations, setLanguage, LANGUAGE_OPTIONS } from
 const STORAGE_KEY = "mesdeparts.station";
 // Legacy wrong default id (Genève Cornavin) that was used for “Lausanne, motte”
 const LEGACY_DEFAULT_STATION_ID = "8587057";
-const DEFAULT_API_MODE = API_MODE_BOARD;
+const DEFAULT_API_MODE = API_MODE_DIRECT;
 const COUNTDOWN_REFRESH_MS = 5_000;
 const STALE_EMPTY_MAX_MS = 60_000; // force recovery if board stays empty this long while stationboard has entries
 const STALE_BOARD_RETRY_COOLDOWN_MS = 60_000; // per-station cache-bypass retry spacing
@@ -165,46 +165,13 @@ function parseApiModeParam(params) {
 }
 
 function getInitialApiMode() {
-  let params = null;
   try {
-    params = new URLSearchParams(window.location.search || "");
-  } catch {
-    params = null;
-  }
-
-  const urlMode = parseApiModeParam(params);
-  if (urlMode) {
-    try {
-      localStorage.setItem(API_MODE_STORAGE_KEY, urlMode);
-      if (urlMode === API_MODE_DIRECT) {
-        localStorage.setItem(API_MODE_AUTO_OFF_KEY, "1");
-      } else {
-        localStorage.removeItem(API_MODE_AUTO_OFF_KEY);
-      }
-    } catch {
-      // ignore
-    }
-    return urlMode;
-  }
-
-  try {
-    const stored = localStorage.getItem(API_MODE_STORAGE_KEY);
-    if (stored === API_MODE_DIRECT || stored === API_MODE_BOARD) {
-      if (stored === API_MODE_DIRECT) {
-        localStorage.setItem(API_MODE_AUTO_OFF_KEY, "1");
-      }
-      return stored;
-    }
+    localStorage.setItem(API_MODE_STORAGE_KEY, API_MODE_DIRECT);
+    localStorage.setItem(API_MODE_AUTO_OFF_KEY, "1");
   } catch {
     // ignore
   }
-
-  try {
-    localStorage.setItem(API_MODE_STORAGE_KEY, API_MODE_BOARD);
-  } catch {
-    // ignore
-  }
-  return API_MODE_BOARD;
+  return API_MODE_DIRECT;
 }
 
 function updateDebugPanel(rows) {

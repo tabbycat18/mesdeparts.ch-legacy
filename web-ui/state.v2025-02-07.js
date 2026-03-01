@@ -66,7 +66,7 @@ export const appState = {
   trainServiceFilter: TRAIN_FILTER_ALL,
 
   // API mode: board (Cloudflare) vs direct (transport.opendata.ch)
-  apiMode: API_MODE_BOARD,
+  apiMode: API_MODE_DIRECT,
 
   // UI refs
   viewSelect: null,              // dropdown (#view-select)

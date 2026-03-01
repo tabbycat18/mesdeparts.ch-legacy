@@ -400,7 +400,7 @@
       import { setupInfoButton } from "./infoBTN.v2025-02-07.js";
 
       const DEFAULT_LANG = initI18n();
-      appState.apiMode = API_MODE_BOARD;
+      appState.apiMode = API_MODE_DIRECT;
       appState.STATION = "Dual board";
 
       setupInfoButton();
@@ -432,7 +432,7 @@
         stationId: "8592082",
         view: VIEW_MODE_LINE,
         hideDeparture: false,
-        apiMode: API_MODE_BOARD,
+        apiMode: API_MODE_DIRECT,
         language: currentLanguage,
       };
 
@@ -441,7 +441,7 @@
         stationId: null,
         view: VIEW_MODE_LINE,
         hideDeparture: false,
-        apiMode: API_MODE_BOARD,
+        apiMode: API_MODE_DIRECT,
         language: currentLanguage,
       };
       const BUS_VIEW_OPTIONS = [
@@ -687,7 +687,7 @@
         base.view = normalizeView(base.view) || VIEW_MODE_LINE;
         base.busView = normalizeView(base.busView);
         base.trainView = normalizeView(base.trainView);
-        base.apiMode = base.apiMode === API_MODE_DIRECT ? API_MODE_DIRECT : API_MODE_BOARD;
+        base.apiMode = API_MODE_DIRECT;
         base.hideDeparture = !!base.hideDeparture;
         base.language = normalizeLang(base.language) || defaults.language || DEFAULT_LANG;
 
@@ -740,7 +740,7 @@
         if (s.view && VALID_VIEWS.has(s.view)) url.searchParams.set("view", s.view);
         if (s.hideDeparture) url.searchParams.set("hideDeparture", "1");
         if (s.language && VALID_LANGS.has(s.language)) url.searchParams.set("lang", s.language);
-        url.searchParams.set("mode", s.apiMode === API_MODE_DIRECT ? "direct" : "board");
+        url.searchParams.set("mode", "direct");
 
         return url.toString();
       }

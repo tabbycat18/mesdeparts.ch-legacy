@@ -80,5 +80,8 @@ Legacy note:
 
 ## Behavior/UX notes
 - Board mode toggle (“Tableau”) reduces API load by using the Worker cache; direct mode is faster for one-off checks. Filters/view changes are client-side only.
+- Legacy UI currently **hides the board mode toggle** in the HTML (commented out). The logic
+  remains in JS; re-enable by uncommenting the `board-mode-toggle*` elements in
+  `web-ui/index.html` and `web-ui/dual-board.html`.
 - Language, favorites, board mode preference, and last station are stored in `localStorage`; nothing leaves the browser.
 - The service worker pre-caches the shell and serves navigations cache-first with background revalidation; API calls always hit the network.

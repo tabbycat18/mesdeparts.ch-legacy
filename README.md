@@ -1,11 +1,11 @@
 # Web UI
 
-Static, dependency-free front-end for mesdeparts.ch. Everything in this folder is served as-is (no build step), with ES modules and versioned filenames to keep long-lived caches safe to bust.
+Static, dependency-free front-end for mesdeparts.ch. UI files live in `web-ui/` and are served as-is (no build step), with ES modules and versioned filenames to keep long-lived caches safe to bust.
 
 Legacy note:
 - The active backend RT merge/debug updates (Swiss platform stop-id matching guard,
   `debug.rt.tripUpdates` diagnostics) live under `realtime_api/backend`.
-- This `legacy_api/web-ui` folder remains archive/legacy flow and does not own that logic.
+- This repo is the legacy/archive flow and does not own active backend RT logic.
 
 ## Features
 - Stop search with suggestions and favorites (stored locally; no account).
@@ -16,9 +16,9 @@ Legacy note:
 - Multilingual (FR/DE/IT/EN), deep links via `?stationName=...&stationId=...`, installable PWA shell (API stays online).
 
 ## Entry points
-- `legacy_api/web-ui/index.html`: single-board experience with language switcher, favorites, filters, and the SBB clock iframe (`clock/`).
-- `legacy_api/web-ui/dual-board.html`: two boards side by side for kiosks/embeds, with separate station pickers and view/filter controls.
-- `manifest.webmanifest` + `service-worker.js`: PWA shell; caches static assets, leaves API requests online-only.
+- `web-ui/index.html`: single-board experience with language switcher, favorites, filters, and the SBB clock iframe (`clock/`).
+- `web-ui/dual-board.html`: two boards side by side for kiosks/embeds, with separate station pickers and view/filter controls.
+- `web-ui/manifest.webmanifest` + `web-ui/service-worker.js`: PWA shell; caches static assets, leaves API requests online-only.
 
 ## Architecture (versioned files)
 - `main.v*.js`: boot; reads URL/localStorage defaults (`stationName`/`stationId`, language), wires event handlers, starts refresh + countdown loops, and toggles board/direct API mode (auto-switches back to board mode after ~2 min unless overridden).
@@ -42,11 +42,11 @@ Legacy note:
 ## Running locally
 - Static server only; no bundler needed:
   ```sh
-  cd legacy_api/web-ui
+  cd web-ui
   python3 -m http.server 8000
   ```
   Then open http://localhost:8000.
-- Tests (Node built-in): `npm test` from `legacy_api/web-ui/` (checks key helpers in `logic.*.js`). `package.json` has no deps.
+- Tests (Node built-in): `npm test` from `web-ui/` (checks key helpers in `logic.*.js`). `package.json` has no deps.
 
 ## Versioning & deploy notes
 - JS/CSS filenames carry a version tag (`*.vYYYY-MM-DD-N.*`). When you bump assets, update references in `index.html`, `dual-board.html`, and the `CORE_ASSETS`/`LAZY_ASSETS` lists inside `service-worker.js`, plus the visible version tags in the HTML headers.
@@ -55,9 +55,8 @@ Legacy note:
 
 ## Edge cache (Cloudflare Worker) — optional
 - What it does: proxy in front of `transport.opendata.ch` with short TTLs to reduce upstream calls when many users watch the same stop.
-- Active files: `realtime_api/edge/worker.js`, `realtime_api/edge/wrangler.toml`.
-- Archive copies (do not deploy): `legacy_api/cloudflare-worker/worker.js`, `legacy_api/wrangler.toml`.
-- Point the UI: set `window.__MD_API_BASE__ = "https://api.mesdeparts.ch"` near the top of `index.html` to use the proxy; otherwise it calls the public API.
+- Worker files in this repo: `cloudflare-worker/worker.js`, `cloudflare-worker/wrangler.toml`.
+- Point the UI: set `window.__MD_API_BASE__ = "https://api.mesdeparts.ch"` near the top of `web-ui/index.html` to use the proxy; otherwise it calls the public API.
 - Board mode uses the proxy; direct mode calls the public API and auto-reverts to board mode after ~2 minutes unless the user keeps it on.
 
 ## Behavior/UX notes

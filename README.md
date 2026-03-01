@@ -6,9 +6,8 @@ The real-time backend + new client are not part of this repo.
 Static, dependency-free front-end for mesdeparts.ch. UI files live in `web-ui/` and are served as-is (no build step), with ES modules and versioned filenames to keep long-lived caches safe to bust.
 
 Legacy note:
-- The active backend RT merge/debug updates (Swiss platform stop-id matching guard,
-  `debug.rt.tripUpdates` diagnostics) live in the separate `mesdeparts.ch` repository.
-- This repo is the legacy/archive flow and does not own active backend RT logic.
+- The active RT backend + new client live in the proprietary `mesdeparts.ch-rt` repository.
+- This repo is the legacy/archive flow and does not own the active RT backend or worker.
 
 ## Features
 - Stop search with suggestions and favorites (stored locally; no account).
@@ -34,9 +33,23 @@ Legacy note:
 - `style.v*.css`: board + dual layout styles, network color tokens, popovers.
 - `clock/`: self-hosted SBB clock assets (Apache 2.0); cached by the service worker for offline/instant loads.
 
+## Data sources (legacy)
+- Primary data source is the public API `https://transport.opendata.ch/v1`:
+  - `/stationboard` for departures
+  - `/locations` for stop search + geolocation
+  - `/connections` and `/journey` for journey details fallback
+- Board mode uses a proxy base (`BOARD_API_BASE`) that comes from `window.__MD_API_BASE__`
+  in `web-ui/index.html` and `web-ui/dual-board.html`.
+- In this repo, `web-ui/index.html` currently sets `window.__MD_API_BASE__ = "https://api.mesdeparts.ch"`.
+  As of the migration, that hostname is the **RT/proprietary** backend, not the legacy proxy.
+  If you want legacy data only, change it to your own legacy proxy or remove it to use
+  `transport.opendata.ch/v1` directly.
+
 ## Data & refresh flow
 - Default station is `Lausanne, motte` (id `8592082`); query params or stored values override it. Deep links use `?stationName=...&stationId=...`.
-- API base defaults to `https://transport.opendata.ch/v1`; override in HTML with `window.__MD_API_BASE__ = "https://api.mesdeparts.ch";` (Cloudflare Worker cache). Board mode uses that proxy; direct mode hits the public API and auto-reverts to board mode after ~2 minutes unless explicitly kept.
+- API base selection:
+  - Direct mode always uses `https://transport.opendata.ch/v1`.
+  - Board mode uses `BOARD_API_BASE` from `window.__MD_API_BASE__` (see “Data sources” above).
 - `refreshDepartures` calls `/stationboard` (limit tuned to UI), rebuilds grouped rows (3 h horizon, train/bus split, line/platform filters, favorites-only mode, train service filters) and renders. Countdown column updates every 5 s from cached data.
 - Stale board guard: if the stationboard looks “empty because everything is already in the past”, the UI triggers a cache-bypassing refetch at most once per minute per station to recover from sticky caches and will fall back to a direct (non-proxy) fetch if the board stays empty for ~1 minute.
 - Station search uses `/locations` (with debounced caching) and an optional geolocation helper via `/locations?x/y`. Journey details overlay falls back to `/journey` or `/connections` when `passList` is missing.
@@ -59,7 +72,8 @@ Legacy note:
 ## Edge cache (Cloudflare Worker) — optional
 - What it does: proxy in front of `transport.opendata.ch` with short TTLs to reduce upstream calls when many users watch the same stop.
 - Worker files in this repo: `cloudflare-worker/worker.js`, `cloudflare-worker/wrangler.toml`.
-- Point the UI: set `window.__MD_API_BASE__ = "https://api.mesdeparts.ch"` near the top of `web-ui/index.html` to use the proxy; otherwise it calls the public API.
+- Point the UI: set `window.__MD_API_BASE__` to **your legacy worker URL** (not the RT backend).
+  Otherwise it calls the public API directly.
 - Board mode uses the proxy; direct mode calls the public API and auto-reverts to board mode after ~2 minutes unless the user keeps it on.
 
 ## Behavior/UX notes

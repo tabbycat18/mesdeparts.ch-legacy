@@ -1,10 +1,13 @@
-# Web UI
+# MesDeparts Legacy Client
+
+This repository contains the legacy client only.
+The real-time backend + new client are not part of this repo.
 
 Static, dependency-free front-end for mesdeparts.ch. UI files live in `web-ui/` and are served as-is (no build step), with ES modules and versioned filenames to keep long-lived caches safe to bust.
 
 Legacy note:
 - The active backend RT merge/debug updates (Swiss platform stop-id matching guard,
-  `debug.rt.tripUpdates` diagnostics) live under `realtime_api/backend`.
+  `debug.rt.tripUpdates` diagnostics) live in the separate `mesdeparts.ch` repository.
 - This repo is the legacy/archive flow and does not own active backend RT logic.
 
 ## Features

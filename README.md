@@ -58,6 +58,7 @@ re-enable the board mode UI (see “Behavior/UX notes”).
 
 ## Data & refresh flow
 - Default station is `Lausanne, motte` (id `8592082`); query params or stored values override it. Deep links use `?stationName=...&stationId=...`.
+- Default bus view is **chronological** (“Display by min”).
 - API base selection:
   - Direct mode always uses `https://transport.opendata.ch/v1`.
   - Board mode uses `BOARD_API_BASE` from `window.__MD_API_BASE__` (see “Data sources” above).

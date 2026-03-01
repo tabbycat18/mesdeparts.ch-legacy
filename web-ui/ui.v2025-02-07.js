@@ -486,8 +486,8 @@ export function setupViewToggle(onChange) {
   ];
 
   const busOptions = [
-    { v: VIEW_MODE_LINE, t: () => t("viewOptionLine") },
     { v: VIEW_MODE_TIME, t: () => t("viewOptionTime") },
+    { v: VIEW_MODE_LINE, t: () => t("viewOptionLine") },
   ];
 
   function setTrainFilter(next) {
@@ -555,14 +555,14 @@ export function setupViewToggle(onChange) {
     const options = isTrainBoard ? trainOptions : busOptions;
     const active = isTrainBoard
       ? appState.trainServiceFilter || TRAIN_FILTER_ALL
-      : appState.viewMode || VIEW_MODE_LINE;
+      : appState.viewMode || VIEW_MODE_TIME;
 
     renderSegment(options, active, isTrainBoard);
     renderSelect(options, active, isTrainBoard);
     renderLegacy(options, active, isTrainBoard);
   }
 
-  if (!appState.viewMode) appState.viewMode = VIEW_MODE_LINE;
+  if (!appState.viewMode) appState.viewMode = VIEW_MODE_TIME;
   if (!appState.trainServiceFilter) appState.trainServiceFilter = TRAIN_FILTER_ALL;
 
   if (sel) {

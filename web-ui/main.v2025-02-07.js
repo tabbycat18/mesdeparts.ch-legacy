@@ -377,7 +377,7 @@ function applyStation(name, id) {
   appState.currentNetwork = detectNetworkFromStation(stationName);
 
   // Default view: group by line
-  appState.viewMode = VIEW_MODE_LINE;
+  appState.viewMode = VIEW_MODE_TIME;
   appState.trainServiceFilter = TRAIN_FILTER_ALL;
 
   // Reset filters on station change

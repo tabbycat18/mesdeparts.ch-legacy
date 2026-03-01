@@ -62,7 +62,7 @@ export const appState = {
   language: "fr",
 
   // View (controls bus display + Motte filter)
-  viewMode: VIEW_MODE_LINE,
+  viewMode: VIEW_MODE_TIME,
   trainServiceFilter: TRAIN_FILTER_ALL,
 
   // API mode: board (Cloudflare) vs direct (transport.opendata.ch)

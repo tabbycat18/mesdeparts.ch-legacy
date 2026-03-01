@@ -430,7 +430,7 @@
       const LEFT_DEFAULT = {
         stationName: "Lausanne, motte",
         stationId: "8592082",
-        view: VIEW_MODE_LINE,
+        view: VIEW_MODE_TIME,
         hideDeparture: false,
         apiMode: API_MODE_DIRECT,
         language: currentLanguage,
@@ -439,14 +439,14 @@
       const RIGHT_DEFAULT = {
         stationName: "Lausanne",
         stationId: null,
-        view: VIEW_MODE_LINE,
+        view: VIEW_MODE_TIME,
         hideDeparture: false,
         apiMode: API_MODE_DIRECT,
         language: currentLanguage,
       };
       const BUS_VIEW_OPTIONS = [
-        { v: VIEW_MODE_LINE, label: () => t("viewOptionLine") },
         { v: VIEW_MODE_TIME, label: () => t("viewOptionTime") },
+        { v: VIEW_MODE_LINE, label: () => t("viewOptionLine") },
       ];
       const TRAIN_VIEW_OPTIONS = [
         { v: TRAIN_FILTER_ALL, label: () => t("trainFilterAll") },
@@ -468,7 +468,7 @@
       const normalizeViewByType = (val, isTrain) => {
         const normalized = normalizeView(val);
         if (isTrain) return isTrainView(normalized) ? normalized : TRAIN_FILTER_ALL;
-        return isBusView(normalized) ? normalized : VIEW_MODE_LINE;
+        return isBusView(normalized) ? normalized : VIEW_MODE_TIME;
       };
 
       const statusEl = document.getElementById("dual-status");
@@ -684,7 +684,7 @@
           base.customUrl = null;
         }
 
-        base.view = normalizeView(base.view) || VIEW_MODE_LINE;
+        base.view = normalizeView(base.view) || VIEW_MODE_TIME;
         base.busView = normalizeView(base.busView);
         base.trainView = normalizeView(base.trainView);
         base.apiMode = API_MODE_DIRECT;
@@ -805,7 +805,7 @@
             ? this.state.busView
             : isBusView(this.state.view)
               ? this.state.view
-              : VIEW_MODE_LINE;
+              : VIEW_MODE_TIME;
           this.trainView = isTrainView(this.state.trainView)
             ? this.state.trainView
             : isTrainView(this.state.view)
@@ -996,7 +996,7 @@
         }
 
         setView(view) {
-          const next = normalizeView(view) || VIEW_MODE_LINE;
+          const next = normalizeView(view) || VIEW_MODE_TIME;
           if (!isBusView(next)) return;
           this.isTrainBoard = false;
           if (this.busView === next) return;
@@ -1345,7 +1345,7 @@
             ? this.state.busView
             : isBusView(this.state.view)
             ? this.state.view
-            : this.busView || VIEW_MODE_LINE;
+            : this.busView || VIEW_MODE_TIME;
           this.trainView = isTrainView(this.state.trainView)
             ? this.state.trainView
             : isTrainView(this.state.view)

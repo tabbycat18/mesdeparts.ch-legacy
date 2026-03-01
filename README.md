@@ -43,6 +43,9 @@ Legacy note:
 - In this repo, `web-ui/index.html` and `web-ui/dual-board.html` now **do not** set
   `window.__MD_API_BASE__` by default, so legacy UI uses `transport.opendata.ch/v1` directly.
   If you want a legacy cache/proxy, set `window.__MD_API_BASE__` to your own legacy worker URL.
+- Rate limit note: `transport.opendata.ch` inherits the upstream `search.ch` per-IP quotas.
+  Using direct mode means **each user’s IP** gets its own daily quota. Using a shared proxy
+  collapses all users onto **one IP** and makes the quota easier to hit.
 
 ## Data & refresh flow
 - Default station is `Lausanne, motte` (id `8592082`); query params or stored values override it. Deep links use `?stationName=...&stationId=...`.

@@ -40,10 +40,9 @@ Legacy note:
   - `/connections` and `/journey` for journey details fallback
 - Board mode uses a proxy base (`BOARD_API_BASE`) that comes from `window.__MD_API_BASE__`
   in `web-ui/index.html` and `web-ui/dual-board.html`.
-- In this repo, `web-ui/index.html` currently sets `window.__MD_API_BASE__ = "https://api.mesdeparts.ch"`.
-  As of the migration, that hostname is the **RT/proprietary** backend, not the legacy proxy.
-  If you want legacy data only, change it to your own legacy proxy or remove it to use
-  `transport.opendata.ch/v1` directly.
+- In this repo, `web-ui/index.html` and `web-ui/dual-board.html` now **do not** set
+  `window.__MD_API_BASE__` by default, so legacy UI uses `transport.opendata.ch/v1` directly.
+  If you want a legacy cache/proxy, set `window.__MD_API_BASE__` to your own legacy worker URL.
 
 ## Data & refresh flow
 - Default station is `Lausanne, motte` (id `8592082`); query params or stored values override it. Deep links use `?stationName=...&stationId=...`.

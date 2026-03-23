@@ -1,10 +1,10 @@
-# MesDeparts Legacy
+# mesdeparts.ch legacy
 
-Legacy public codebase for the older MesDeparts web client.
+Legacy public codebase for the older mesdeparts.ch web client.
 
 ## Legacy Status
 
-This repository preserves the legacy MesDeparts client and related public code. It is not the main current public surface for the project, and it is not the full current production system behind the live service.
+This repository preserves the legacy mesdeparts.ch client and related public code. It is not the main current public surface for the project, and it is not the full current production system behind the live service.
 
 ## What This Repository Contains
 
@@ -12,7 +12,7 @@ This repository preserves the legacy MesDeparts client and related public code. 
 - An optional Cloudflare Worker code surface under `cloudflare-worker/`
 - Public repository files such as the security policy and trademark notice
 
-This repo is the historical and self-hostable public code surface for the legacy version of MesDeparts.
+This repo is the historical and self-hostable public code surface for the legacy version of mesdeparts.ch.
 
 ## What This Repository Does Not Contain
 
@@ -29,7 +29,7 @@ This repo is the historical and self-hostable public code surface for the legacy
 
 ## Current Status
 
-This is a legacy repository. It should be read as historical or maintenance-scope code, not as the canonical representation of the current live MesDeparts service.
+This is a legacy repository. It should be read as historical or maintenance-scope code, not as the canonical representation of the current live mesdeparts.ch service.
 
 Support expectations should stay limited: this repo remains useful as a public reference and legacy code surface, but it should not be treated as the current product stack.
 

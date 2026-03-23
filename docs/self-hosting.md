@@ -105,7 +105,7 @@ This is optional, but it is a reasonable first check before publishing your own 
 
 This self-hosting surface is legacy and limited by design.
 
-- It is not the same as the current live MesDeparts service
+- It is not the same as the current live mesdeparts.ch service
 - It is best suited for legacy use, experimentation, archival purposes, and limited self-hosting
 - Public documentation here stays intentionally high-level and does not act as a private operations handbook
 

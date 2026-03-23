@@ -2,11 +2,11 @@
 
 This page gives a high-level public architecture view of the legacy `mesdeparts.ch-legacy` repository.
 
-It describes the legacy public codebase only, not the full current MesDeparts live system.
+It describes the legacy public codebase only, not the full current mesdeparts.ch live system.
 
 ## Overview
 
-At a high level, this repository packages an older browser-based MesDeparts client, an optional worker/proxy surface, and a small set of public documentation pages.
+At a high level, this repository packages an older browser-based mesdeparts.ch client, an optional worker/proxy surface, and a small set of public documentation pages.
 
 The repository should be read as a legacy public architecture snapshot: useful for understanding the older public codebase and for limited self-hosting, but not as a full picture of the current live service.
 
@@ -46,7 +46,7 @@ This description is intentionally high-level. It explains the public shape of th
 
 ## What This Repo Represents
 
-This repository represents the public legacy code surface for MesDeparts:
+This repository represents the public legacy code surface for mesdeparts.ch:
 
 - an older static web client
 - an optional worker/proxy layer
@@ -61,7 +61,7 @@ This repository does not contain:
 - the current proprietary realtime/backend system
 - the current production operations or deployment setup
 - private infrastructure, secrets, or internal tooling
-- full parity with the current live MesDeparts service
+- full parity with the current live mesdeparts.ch service
 
 ## Relationship To The Current Project
 

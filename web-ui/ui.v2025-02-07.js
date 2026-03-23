@@ -252,7 +252,7 @@ function setStationSelection(name, id, onStationPicked) {
       if (onStationPicked.length >= 2) onStationPicked(appState.STATION, appState.stationId);
       else onStationPicked(appState.STATION);
     } catch (e) {
-      console.error("[MesDeparts][ui] onStationPicked error", e);
+      console.error("[mesdeparts.ch][ui] onStationPicked error", e);
     }
   }
 
@@ -263,7 +263,7 @@ function setStationSelection(name, id, onStationPicked) {
       appState._ensureViewSelectOptions();
     }
   } catch (e) {
-    console.warn("[MesDeparts][ui] _ensureViewSelectOptions failed", e);
+    console.warn("[mesdeparts.ch][ui] _ensureViewSelectOptions failed", e);
   }
 
   // Keep filters visibility consistent with the current view/station.
@@ -937,7 +937,7 @@ function notifyFavoritesOnlyChange() {
       appState._favoriteFilterChanged(!!appState.favoritesOnly);
     }
   } catch (e) {
-    console.warn("[MesDeparts][ui] favoritesOnly hook failed", e);
+    console.warn("[mesdeparts.ch][ui] favoritesOnly hook failed", e);
   }
 }
 
@@ -1889,7 +1889,7 @@ function setGeoLoading(on) {
 
       // We only allow starring when we have a reliable stop id
       if (!id) {
-        console.warn("[MesDeparts][favorites] Cannot favorite without stationId. Pick a suggestion first.");
+        console.warn("[mesdeparts.ch][favorites] Cannot favorite without stationId. Pick a suggestion first.");
         refreshFavToggleFromState();
         return;
       }
@@ -2335,7 +2335,7 @@ async function openJourneyDetails(dep) {
     stopsEl.appendChild(renderJourneyStops(dep, detail));
   } catch (err) {
     if (isAbortError(err) || reqId !== activeJourneyRequestId) return;
-    console.error("[MesDeparts][journey] error", err);
+    console.error("[mesdeparts.ch][journey] error", err);
     metaEl.textContent = t("journeyStopsError");
     stopsEl.innerHTML = "";
   } finally {
@@ -2511,7 +2511,7 @@ export function renderDepartures(rows) {
   const total = Array.isArray(rows) ? rows.length : 0;
   const trainCount = (rows || []).filter((r) => r && r.mode === "train").length;
   const busCount = total - trainCount;
-  uiDebugLog("[MesDeparts][ui] renderDepartures", {
+  uiDebugLog("[mesdeparts.ch][ui] renderDepartures", {
     station: appState.STATION,
     viewMode: appState.viewMode,
     total,
@@ -2566,7 +2566,7 @@ export function renderDepartures(rows) {
       window.__MD_UI_LOGGED__ = window.__MD_UI_LOGGED__ || 0;
       if (window.__MD_UI_LOGGED__ < 20) {
         window.__MD_UI_LOGGED__ += 1;
-        uiDebugLog("[MesDeparts][ui-row]", {
+        uiDebugLog("[mesdeparts.ch][ui-row]", {
           mode: dep?.mode,
           line: dep?.simpleLineId || dep?.line || dep?.number || "",
           category: dep?.category || "",

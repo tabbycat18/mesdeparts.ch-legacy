@@ -80,7 +80,7 @@ const defer = (fn) => {
         try {
           fn();
         } catch (err) {
-          console.error("[MesDeparts][defer] error", err);
+          console.error("[mesdeparts.ch][defer] error", err);
         }
       },
       { timeout: 500 },
@@ -91,7 +91,7 @@ const defer = (fn) => {
     try {
       fn();
     } catch (err) {
-      console.error("[MesDeparts][defer] error", err);
+      console.error("[mesdeparts.ch][defer] error", err);
     }
   }, 0);
 };
@@ -102,7 +102,7 @@ function logPerf(label, data) {
     Object.entries(data || {}).map(([k, v]) => [k, typeof v === "number" ? Math.round(v) : v]),
   );
   // eslint-disable-next-line no-console
-  console.log(`[MesDeparts][perf] ${label}`, pretty);
+  console.log(`[mesdeparts.ch][perf] ${label}`, pretty);
 }
 
 const isDualEmbed = () =>
@@ -193,7 +193,7 @@ function updateDebugPanel(rows) {
     sample,
   };
 
-  console.debug("[MesDeparts][debug]", payload);
+  console.debug("[mesdeparts.ch][debug]", payload);
 }
 
 let refreshTimer = null;
@@ -251,7 +251,7 @@ function refreshCountdownTick() {
     }
     publishEmbedState();
   } catch (err) {
-    console.error("[MesDeparts] countdown refresh error:", err);
+    console.error("[mesdeparts.ch] countdown refresh error:", err);
     refreshDepartures();
   }
 }
@@ -349,7 +349,7 @@ function applyUrlPreferences() {
       appState.hideBusDeparture = raw === "1" || raw === "true" || raw === "on" || raw === "yes";
     }
   } catch (err) {
-    console.warn("[MesDeparts] failed to read URL prefs", err);
+    console.warn("[mesdeparts.ch] failed to read URL prefs", err);
   }
 }
 
@@ -451,7 +451,7 @@ async function refreshDepartures({ retried, showLoadingHint = true } = {}) {
           return;
         }
       } catch (e) {
-        console.warn("[MesDeparts][retry] resolveStationId retry failed", e);
+        console.warn("[mesdeparts.ch][retry] resolveStationId retry failed", e);
       }
     }
 
@@ -479,7 +479,7 @@ async function refreshDepartures({ retried, showLoadingHint = true } = {}) {
           publishEmbedState();
           return;
         } catch (e) {
-          console.warn("[MesDeparts][stale-retry] failed", e);
+          console.warn("[mesdeparts.ch][stale-retry] failed", e);
         }
       }
     }
@@ -506,7 +506,7 @@ async function refreshDepartures({ retried, showLoadingHint = true } = {}) {
         publishEmbedState();
         return;
       } catch (e) {
-        console.warn("[MesDeparts][stale-direct-rescue] failed", e);
+        console.warn("[mesdeparts.ch][stale-direct-rescue] failed", e);
       } finally {
         appState.apiMode = prevMode;
       }
@@ -535,7 +535,7 @@ async function refreshDepartures({ retried, showLoadingHint = true } = {}) {
         publishEmbedState();
         return;
       } catch (e) {
-        console.warn("[MesDeparts][stale-direct-rescue-empty] failed", e);
+        console.warn("[mesdeparts.ch][stale-direct-rescue-empty] failed", e);
       } finally {
         appState.apiMode = prevMode;
       }
@@ -565,7 +565,7 @@ async function refreshDepartures({ retried, showLoadingHint = true } = {}) {
     updateDebugPanel(rows);
     publishEmbedState();
   } catch (err) {
-    console.error("[MesDeparts] refresh error:", err);
+    console.error("[mesdeparts.ch] refresh error:", err);
 
     const transient = isTransientFetchError(err);
     if (transient && appState.apiMode === API_MODE_BOARD) {
@@ -584,7 +584,7 @@ async function refreshDepartures({ retried, showLoadingHint = true } = {}) {
         publishEmbedState();
         return;
       } catch (directErr) {
-        console.warn("[MesDeparts][transient-fallback] direct mode failed", directErr);
+        console.warn("[mesdeparts.ch][transient-fallback] direct mode failed", directErr);
       } finally {
         appState.apiMode = prevMode;
       }
@@ -599,7 +599,7 @@ async function refreshDepartures({ retried, showLoadingHint = true } = {}) {
         publishEmbedState();
         return;
       } catch (cacheErr) {
-        console.warn("[MesDeparts][transient-fallback] cache render failed", cacheErr);
+        console.warn("[mesdeparts.ch][transient-fallback] cache render failed", cacheErr);
       }
     }
 
@@ -639,7 +639,7 @@ function refreshDeparturesFromCache({ allowFetch = true, skipFilters = false, sk
     if (!skipDebug) updateDebugPanel(rows);
     publishEmbedState();
   } catch (err) {
-    console.error("[MesDeparts] cached refresh error:", err);
+    console.error("[mesdeparts.ch] cached refresh error:", err);
     refreshDepartures();
   }
 }

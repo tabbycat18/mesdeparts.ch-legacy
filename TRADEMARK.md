@@ -1,6 +1,6 @@
 # Trademark Notice
 
-"MesDeparts" and "mesdeparts.ch", including associated names, logos, and branding,
+"mesdeparts.ch", including associated names, logos, and branding,
 are trademarks (or claimed marks) of Mattia Pastore.
 
 The Apache-2.0 license for this repository grants rights to the source code,

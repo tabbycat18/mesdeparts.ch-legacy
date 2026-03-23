@@ -1,6 +1,6 @@
 {
   "name": "mesdeparts.ch",
-  "short_name": "Mes Départs",
+  "short_name": "mesdeparts.ch",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#000000",

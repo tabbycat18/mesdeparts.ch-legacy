@@ -486,7 +486,7 @@ export async function fetchStationboardRaw(options = {}) {
         (!data?.station || !data?.stationboard || data.stationboard.length === 0);
 
       if (needsRetry) {
-        console.warn("[MesDeparts] stationboard empty/missing, retrying with resolved id", {
+        console.warn("[mesdeparts.ch] stationboard empty/missing, retrying with resolved id", {
           station: appState.STATION,
           badId: appState.stationId,
         });
@@ -495,7 +495,7 @@ export async function fetchStationboardRaw(options = {}) {
           await resolveStationId();
           return await fetchStationboardRaw({ allowRetry: false });
         } catch (resolveErr) {
-          console.warn("[MesDeparts] stationboard retry failed", resolveErr);
+          console.warn("[mesdeparts.ch] stationboard retry failed", resolveErr);
         }
       }
 
@@ -507,7 +507,7 @@ export async function fetchStationboardRaw(options = {}) {
         isInvalidStationboardError(err);
 
       if (canRetry) {
-        console.warn("[MesDeparts] stationboard retry with resolved id", {
+        console.warn("[mesdeparts.ch] stationboard retry with resolved id", {
           station: appState.STATION,
           badId: appState.stationId,
           error: err?.message || String(err),
@@ -517,7 +517,7 @@ export async function fetchStationboardRaw(options = {}) {
           await resolveStationId();
           return await fetchStationboardRaw({ allowRetry: false });
         } catch (resolveErr) {
-          console.warn("[MesDeparts] stationboard retry failed", resolveErr);
+          console.warn("[mesdeparts.ch] stationboard retry failed", resolveErr);
         }
       }
       throw err;
@@ -614,7 +614,7 @@ export function buildDeparturesGrouped(data, viewMode = VIEW_MODE_LINE) {
 
     // Debug: inspect operator string and PostAuto detection in console
     if (DEBUG_EARLY && rawOperator) {
-      console.log("[MesDeparts] operator debug", {
+      console.log("[mesdeparts.ch] operator debug", {
         station: appState.STATION,
         line: `${rawCategory}${rawNumber}`.trim(),
         dest: entry.to || "",
@@ -673,7 +673,7 @@ export function buildDeparturesGrouped(data, viewMode = VIEW_MODE_LINE) {
 
     // Debug: specifically log cases where prognosis is earlier than scheduled
     if (DEBUG_EARLY && delaySource === "prognosis" && delayMin < 0) {
-      console.log("[MesDeparts][early-case]", {
+      console.log("[mesdeparts.ch][early-case]", {
         station: appState.STATION,
         mode,
         line: `${rawCategory}${rawNumber}`.trim(),
@@ -718,7 +718,7 @@ export function buildDeparturesGrouped(data, viewMode = VIEW_MODE_LINE) {
 
     if (DEBUG_EARLY && debugLogged < DEBUG_MAX) {
       debugLogged += 1;
-      console.log("[MesDeparts][early-debug]", {
+      console.log("[mesdeparts.ch][early-debug]", {
         station: appState.STATION,
         mode,
         category: rawCategory,

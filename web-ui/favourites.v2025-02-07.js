@@ -78,7 +78,7 @@ export function loadFavorites() {
     const parsed = safeParseJSON(raw);
     return dedupeAndSort(parsed);
   } catch (e) {
-    console.warn("[MesDeparts][favorites] load failed", e);
+    console.warn("[mesdeparts.ch][favorites] load failed", e);
     return [];
   }
 }
@@ -93,7 +93,7 @@ export function saveFavorites(list) {
   try {
     localStorage.setItem(LS_KEY, JSON.stringify(normalized));
   } catch (e) {
-    console.warn("[MesDeparts][favorites] save failed", e);
+    console.warn("[mesdeparts.ch][favorites] save failed", e);
   }
   return normalized;
 }
@@ -149,7 +149,7 @@ export function clearFavorites() {
   try {
     localStorage.removeItem(LS_KEY);
   } catch (e) {
-    console.warn("[MesDeparts][favorites] clear failed", e);
+    console.warn("[mesdeparts.ch][favorites] clear failed", e);
   }
 }
 
